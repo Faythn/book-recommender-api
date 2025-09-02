@@ -17,15 +17,10 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from books.views import BookViewSet, ReviewViewSet, RecommendationViewSet
-
-router = DefaultRouter()
-router.register(r'books', BookViewSet)
-router.register(r'reviews', ReviewViewSet)
-router.register(r'recommendations', RecommendationViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
+    path("admin/", admin.site.urls),
+    path("api/", include("books.urls")),       # books app
+    path("api/accounts/", include("accounts.urls")),  # accounts app
 ]
+
