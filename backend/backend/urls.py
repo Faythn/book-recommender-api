@@ -24,3 +24,18 @@ urlpatterns = [
     path("api/accounts/", include("accounts.urls")),  # accounts app
 ]
 
+from django.contrib import admin
+from django.urls import path, include
+from django.http import JsonResponse
+
+def home(request):
+    return JsonResponse({"message": "Welcome to the Book Recommender API 🚀"})
+
+urlpatterns = [
+    path("", home),  # 👈 add this
+    path("admin/", admin.site.urls),
+    path("api/", include("books.urls")),
+    path("api/accounts/", include("accounts.urls")),
+]
+
+

@@ -25,3 +25,15 @@ Django-based API for searching books, adding reviews, and getting recommendation
 - `/api/books/<id>/`
 - `/api/reviews/create/`
 - `/api/recommendations/`
+
+
+### 🔐 Authentication
+- **Register User** → `POST /api/accounts/register/`  
+  Example body:
+  
+```json
+  {
+    "username": "Kioko",
+    "email": "fkioko790@gmail.com",
+    "password": "Kioko@2002"
+  }
