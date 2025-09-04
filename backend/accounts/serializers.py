@@ -10,14 +10,11 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("username", "email", "password")
+         
+    def create(self, request, *args, **kwargs):
+         print("RAW DATA:", request.body)   # 👈 see exactly what Postman sends
+         return super().create(request, *args, **kwargs)
 
-    def create(self, validated_data):
-        user = User.objects.create_user(
-            username=validated_data["username"],
-            email=validated_data.get("email"),
-            password=validated_data["password"]
-        )
-        return user
 
 
 class UserSerializer(serializers.ModelSerializer):

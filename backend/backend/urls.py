@@ -35,7 +35,9 @@ urlpatterns = [
     path("", home),  # 👈 add this
     path("admin/", admin.site.urls),
     path("api/", include("books.urls")),
-    path("api/accounts/", include("accounts.urls")),
 ]
+
+
+
 
 
