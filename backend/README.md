@@ -33,7 +33,29 @@ Django-based API for searching books, adding reviews, and getting recommendation
   
 ```json
   {
-    "username": "Kioko",
-    "email": "fkioko790@gmail.com",
-    "password": "Kioko@2002"
+    "username": "Mali",
+    "email": "mali@gmail.com",
+    "password": "Mali@2007"
   }
+
+##sample book
+
+{
+  "title": "Clean Code",
+  "author": "Robert C. Martin",
+  "genre": "Programming"
+}
+
+
+##Register user
+POST http://127.0.0.1:8000/api/accounts/register/
+
+##Login user
+POST http://127.0.0.1:8000/api/accounts/login/
+
+##ListBooks
+GET http://127.0.0.1:8000/api/books/books/
+
+##Create books(requires authorization)
+POST http://127.0.0.1:8000/api/books/books/
+

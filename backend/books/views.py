@@ -4,12 +4,13 @@ from django.conf import settings
 from rest_framework import viewsets, status, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser,IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Book, Review, Recommendation
 from .serializers import BookSerializer, ReviewSerializer, RecommendationSerializer
-from .permissions import AdminOrReadOnly  # ✅ make sure this file exists
+
 
 
 
@@ -20,7 +21,7 @@ class BookViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ["title", "author", "genre"]
     search_fields = ["title", "author", "genre"]
-    permission_classes = [AdminOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     # 🔹 Get book recommendations by genre
     @action(detail=True, methods=["get"])
@@ -57,7 +58,7 @@ class BookViewSet(viewsets.ModelViewSet):
         return Response(results)
 
     # 🔹 Import external book into local DB (Admins only)
-    @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
+    @action(detail=False, methods=["post"], permission_classes=[IsAuthenticatedOrReadOnly])
     def import_external(self, request):
         external_id = request.data.get("external_id")
         if not external_id:
@@ -89,7 +90,7 @@ class BookViewSet(viewsets.ModelViewSet):
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
         # Automatically attach logged-in user to review
@@ -98,4 +99,4 @@ class ReviewViewSet(viewsets.ModelViewSet):
 class RecommendationViewSet(viewsets.ModelViewSet):
     queryset = Recommendation.objects.all()
     serializer_class = RecommendationSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
